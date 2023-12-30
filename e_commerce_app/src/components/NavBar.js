@@ -1,8 +1,13 @@
-import React, { useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import useApi from '../hooks/useApi';
 
-const NavBar = () => {
+const NavBar = ({ setSelectedCategory, selectedCategory }) => {
   const { loading, error, data: categories } = useApi("https://fakestoreapi.com/products/categories", null);
+
+  // Move the useCallback hook outside of any conditionals
+  const handleClick = useCallback((category) => {
+    setSelectedCategory(category);
+  }, [setSelectedCategory]);
 
   if (loading === null) {
     return <div>Loading status is not available.</div>;
@@ -18,7 +23,11 @@ const NavBar = () => {
     return (
       <div className="flex gap-16 p-16 bg-blue-100 capitalize">
         {categories.map((category) => (
-          <div className="bg-black bg-opacity-10 p-4 rounded-md hover:bg-blue-700 cursor-pointer" key={category}>
+          <div
+            onClick={() => handleClick(category)}
+            className="bg-black bg-opacity-10 p-4 rounded-md hover:bg-blue-700 cursor-pointer"
+            key={category}
+          >
             {category}
           </div>
         ))}
@@ -28,3 +37,5 @@ const NavBar = () => {
 };
 
 export default NavBar;
+
+

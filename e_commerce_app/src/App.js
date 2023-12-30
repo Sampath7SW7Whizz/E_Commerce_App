@@ -5,18 +5,27 @@ import NavBar from './components/NavBar';
 import ProductList from './components/ProductList';
 import Home from './components/Home';
 import NotFound from './components/NotFound';
+import { useState } from 'react';
 
 
 function App() {
+
+  //why we kept here selectedcategory instead of inside navbar 
+  //is we want to use it in products list as well
+  const[selectedCategory,setSelectedCategory]=useState(null);
+
   return (
     <Router>
 
     <div className="App">
-     <h1 className='bg-green-100'>E_Commerce</h1>
-     <NavBar/>
+     
+     <NavBar
+     selectedCategory={selectedCategory}
+     setSelectedCategory={setSelectedCategory}
+     />
     </div>
     <Routes>
-    <Route path="/products" element={<ProductList/>} />
+    <Route path="/products" element={<ProductList selectedCategory={selectedCategory}/>} />
     <Route path="/" exact element={<Home/>} />
     <Route  path="/not-found" element={<NotFound/>} />
     </Routes>
