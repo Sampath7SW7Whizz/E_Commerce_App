@@ -2,6 +2,8 @@ import React, { useEffect } from 'react';
 import useApi from '../hooks/useApi';
 import { NavLink } from 'react-router-dom';
 import { useProductsContext } from '../context/ProductContext';
+import { useDispatch } from 'react-redux';
+import { loadUser } from '../store/user';
 
 const NavBar = () => {
   const { loading, error, data: categories } = useApi("https://fakestoreapi.com/products/categories", null);
@@ -9,6 +11,11 @@ const NavBar = () => {
  
   const data=useProductsContext();
 
+  const dispatch=useDispatch();
+
+  useEffect(()=>{
+  dispatch(loadUser());
+  },[dispatch]);
 
 
   if (loading) {
