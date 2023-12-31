@@ -1,17 +1,15 @@
-import React, { useCallback, useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import useApi from '../hooks/useApi';
+import { NavLink } from 'react-router-dom';
+import { useProductsContext } from '../context/ProductContext';
 
-const NavBar = ({ setSelectedCategory, selectedCategory }) => {
+const NavBar = () => {
   const { loading, error, data: categories } = useApi("https://fakestoreapi.com/products/categories", null);
+  
+ 
+  const data=useProductsContext();
 
-  // Move the useCallback hook outside of any conditionals
-  const handleClick = useCallback((category) => {
-    setSelectedCategory(category);
-  }, [setSelectedCategory]);
 
-  if (loading === null) {
-    return <div>Loading status is not available.</div>;
-  }
 
   if (loading) {
     return <div>Categories is Loading....</div>;
@@ -23,13 +21,16 @@ const NavBar = ({ setSelectedCategory, selectedCategory }) => {
     return (
       <div className="flex gap-16 p-16 bg-blue-100 capitalize">
         {categories.map((category) => (
-          <div
-            onClick={() => handleClick(category)}
-            className="bg-black bg-opacity-10 p-4 rounded-md hover:bg-blue-700 cursor-pointer"
+          <NavLink
             key={category}
-          >
+            to={`/products/${category}`}
+            className={({ isActive }) =>
+            isActive ? "p-4 rounded-md hover:bg-blue-700 cursor-pointer bg-yellow-500" : 
+            "p-4 rounded-md hover:bg-blue-700 cursor-pointer bg-black bg-opacity-50"
+          }
+          > 
             {category}
-          </div>
+          </NavLink>
         ))}
       </div>
     );
@@ -37,5 +38,3 @@ const NavBar = ({ setSelectedCategory, selectedCategory }) => {
 };
 
 export default NavBar;
-
-
