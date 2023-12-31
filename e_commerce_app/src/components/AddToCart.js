@@ -1,17 +1,26 @@
 import React, { useCallback } from 'react';
 import { useCartContext } from '../context/CartContext';
+import { useDispatch, useSelector } from 'react-redux';
+import { addToCart, removeFromCart } from '../store/cart';
 
 function AddToCart({ product }){
-  const { cart, addToCart,removeItems} = useCartContext();
+  const {removeItems} = useCartContext();
+
+  const cart=useSelector(state=>state.cart)
+
+ const dispatch=useDispatch();
 
   const handleAddToCart = useCallback(() => {
-    addToCart(product);
-  }, [addToCart, product]);  // Ensure that 'addToCart' and 'product' are the only dependencies
+    
+    dispatch(addToCart(product));
+    
+  }, [product,dispatch]);  // Ensure that 'addToCart' and 'product' are the only dependencies
 
 
   const handleRemoveFromCart = useCallback(() => {
-    removeItems(product);
-  }, [removeItems, product]);
+  
+    dispatch(removeFromCart(product));
+  }, [product,dispatch]);
 
 
   if (cart?.[product?.id]) {

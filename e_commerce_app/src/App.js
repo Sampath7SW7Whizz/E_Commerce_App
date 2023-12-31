@@ -6,9 +6,12 @@ import Home from './components/Home';
 import NotFound from './components/NotFound';
 import ProductsProvider from './context/ProductContext';
 import CartProvider from './context/CartContext';
+import { Provider } from 'react-redux';
+import store from'./store'
 
 function App() {
   return (
+    <Provider store={store}>
     <Router>
       <ProductsProvider>
         <CartProvider>
@@ -25,6 +28,7 @@ function App() {
       </CartProvider>
       </ProductsProvider>
     </Router>
+    </Provider>
   );
 }
 
