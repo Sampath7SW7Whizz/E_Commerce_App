@@ -1,11 +1,12 @@
-import React, { useEffect, useMemo } from 'react';
+import React, { useEffect } from 'react';
 import useApi from '../hooks/useApi';
 import { Link, NavLink } from 'react-router-dom';
 import { useProductsContext } from '../context/ProductContext';
 import { useDispatch, useSelector } from 'react-redux';
 import { loadUser } from '../store/user';
 import { BsCart3 } from 'react-icons/bs';
-import Product from './Product';
+
+import { cartItemsSelector } from '../selectors/cart';
 
 const NavBar = () => {
   const { loading, error, data: categories } = useApi('https://fakestoreapi.com/products/categories', null);
@@ -16,16 +17,7 @@ const NavBar = () => {
 
   const cart = useSelector((state) => state.cart);
 
-  
-  const cartItems = useMemo(() => {
-    let totalItems = 0;
-    if (Object.keys(cart).length > 0) {
-      Object.keys(cart).forEach((productId) => {
-        totalItems += cart[productId].quantity;
-      });
-    }
-    return totalItems;
-  }, [cart]);
+  const cartItems=useSelector(cartItemsSelector);
 
   useEffect(() => {
     dispatch(loadUser());

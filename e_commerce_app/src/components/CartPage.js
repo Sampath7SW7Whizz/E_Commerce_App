@@ -2,12 +2,17 @@ import React,{useMemo} from 'react'
 import { useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import CartProduct from './CartProduct';
+import { cartItemsSelector, totalItemsSelector } from '../selectors/cart';
 
 const CartPage = () => {
   const cart=useSelector((state)=>state.cart);
 
+  const cartTotal=useSelector(totalItemsSelector);
+ 
+  const cartItems=useSelector(cartItemsSelector);
 
-const cartItems = useMemo(() => {
+  /**
+   * const cartItems = useMemo(() => {
     let totalItems = 0;
     if (Object.keys(cart).length > 0) {
       Object.keys(cart).forEach((productId) => {
@@ -17,15 +22,10 @@ const cartItems = useMemo(() => {
     return totalItems;
   }, [cart]);
 
-  const cartTotal= useMemo(() => {
-    let total= 0;
-    if (Object.keys(cart).length > 0) {
-      Object.keys(cart).forEach((productId) => {
-        total += cart[productId].quantity*cart[productId].price;
-      });
-    }
-    return total;
-  }, [cart]);
+   */
+
+
+  
 
   if(cartItems===0){
     return(
@@ -46,10 +46,6 @@ const cartItems = useMemo(() => {
         </div>
     )
   }
-
-  return (
-    <div>CartPage</div>
-  )
 }
 
 export default CartPage;
