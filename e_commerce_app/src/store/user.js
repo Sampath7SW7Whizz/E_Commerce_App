@@ -20,7 +20,7 @@ const initialState={
 export const loadUser=()=>{
     return async(dispatch,getState)=>{
         const state=getState();
-        console.log("user load called",{state});
+       
         dispatch({type:INIT_LOADING});
         try{
             const res=await axios.get("https://fakestoreapi.com/users/1");

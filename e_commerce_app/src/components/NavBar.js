@@ -16,8 +16,7 @@ const NavBar = () => {
 
   const cart = useSelector((state) => state.cart);
 
-  console.log('hi from navbar cart', cart);
-
+  
   const cartItems = useMemo(() => {
     let totalItems = 0;
     if (Object.keys(cart).length > 0) {
