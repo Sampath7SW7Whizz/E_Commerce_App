@@ -8,6 +8,7 @@ import ProductsProvider from './context/ProductContext';
 import CartProvider from './context/CartContext';
 import { Provider } from 'react-redux';
 import store from'./store'
+import CartPage from './components/CartPage';
 
 function App() {
   return (
@@ -22,6 +23,7 @@ function App() {
           <Route path="/" element={<Home />} />
           {/* Use the categoryName parameter from the route */}
           <Route path="/products/:categoryName" element={<ProductList />} />
+          <Route path="/cart" element={<CartPage/>} />
           <Route path="/not-found" element={<NotFound />} />
         </Routes>
       </div>
